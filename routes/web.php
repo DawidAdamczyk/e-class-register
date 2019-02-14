@@ -26,4 +26,7 @@ Route::get('/teacher', function(){
 Route::get('/student', function(){
     echo "Hello student";
 })->middleware('auth','student');
- 
+
+Route::resource('teacher', 'TeacherController');
+
+Route::get('student' , 'StudentController@index');
