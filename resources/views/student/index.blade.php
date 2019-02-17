@@ -12,4 +12,25 @@
             ])}}
         {{Form::close()}}
     <div>
+
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Mark</th>
+          <th scope="col">Weight</th>
+          <th scope="col">Comment</th>
+        </tr>
+       </thead>
+       <tbody>
+          @foreach ($marks as $mark)
+            <tr>
+              <td class='border-right'>{{$mark->name}}</td>
+              <td class='border-right'>{{$mark->mark}}</td>
+              <td class='border-right'>{{$mark->weight}}</td>
+              <td class='border-right'>{{$mark->comment}}</td>
+            </tr>
+          @endforeach
+       </tbody> 
+    </table>   
 @endsection

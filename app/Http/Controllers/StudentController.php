@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Mark;
 
 class StudentController extends Controller
 {
@@ -14,7 +16,11 @@ class StudentController extends Controller
 
     public function index()
     {
-        return view('student.index');
+        $user = Auth::user();
+
+        $marks = Mark::where('student_id', $user->id)->get();
+
+        return view('student.index')->with('marks', $marks);
     }
 
     public function orderBy($item)

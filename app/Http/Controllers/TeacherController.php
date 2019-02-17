@@ -19,7 +19,7 @@ class TeacherController extends Controller
 
     public function index()
     {
-        echo "ok";
+        return view('teacher.index');
     }
 
     /**
