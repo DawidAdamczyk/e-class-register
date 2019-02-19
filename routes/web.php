@@ -14,3 +14,19 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/teacher', function(){
+    echo "Hello teacher";
+})->middleware('auth','teacher');
+ 
+Route::get('/student', function(){
+    echo "Hello student";
+})->middleware('auth','student');
+
+Route::resource('teacher', 'TeacherController');
+
+Route::get('student' , 'StudentController@index');
