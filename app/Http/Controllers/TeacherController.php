@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\HTTP\Requests\MarkUpdate;
+use App\HTTP\Requests\MarkStore;
 use App\User;
 use App\Mark;
 
@@ -42,7 +44,7 @@ class TeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MarkStore $request)
     {
         $mark = new Mark();
 
@@ -73,7 +75,11 @@ class TeacherController extends Controller
 
         $marks = Mark::where('student_id', $id)->get();
 
-        return view('teacher.show', ['student' => $student, 'marks' => $marks]);
+        if (empty($student)) {
+            return redirect('/teacher');
+        } else {
+            return view('teacher.show', ['student' => $student, 'marks' => $marks]);
+        }
     }
 
     /**
@@ -96,7 +102,7 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MarkUpdate $request, $id)
     {
         $mark = Mark::find($id);
 
@@ -106,7 +112,7 @@ class TeacherController extends Controller
 
         $mark->weight = $request->input('weight');
 
-        $mark->comment = $request->input('weight');
+        $mark->comment = $request->input('comment');
 
         $mark->save();
 
