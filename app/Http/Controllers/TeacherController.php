@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Mark;
 
 class TeacherController extends Controller
 {
@@ -19,7 +21,9 @@ class TeacherController extends Controller
 
     public function index()
     {
-        return view('teacher.index');
+        $students = User::where('role', 'student')->get();
+        
+        return view('teacher.index')->with('students', $students);
     }
 
     /**
@@ -29,7 +33,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        echo "ok";
+        return view('teacher.create');
     }
 
     /**
@@ -40,7 +44,21 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        echo "ok";
+        $mark = new Mark();
+
+        $mark->student_id = $request->input('student_id');
+
+        $mark->name = $request->input('name');
+
+        $mark->mark = $request->input('mark');
+
+        $mark->weight = $request->input('weight');
+
+        $mark->comment = $request->input('comment');
+
+        $mark->save();
+
+        return redirect('/teacher');
     }
 
     /**
@@ -51,7 +69,11 @@ class TeacherController extends Controller
      */
     public function show($id)
     {
-        echo "ok";
+        $student = User::where(['id' => $id, 'role' => 'student'])->first();
+
+        $marks = Mark::where('student_id', $id)->get();
+
+        return view('teacher.show', ['student' => $student, 'marks' => $marks]);
     }
 
     /**
@@ -62,7 +84,9 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        echo "ok";
+        $mark = Mark::findOrFail($id);
+
+        return view('teacher.edit')->with('mark', $mark);
     }
 
     /**
@@ -74,7 +98,19 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo "ok";
+        $mark = Mark::find($id);
+
+        $mark->name = $request->input('name');
+
+        $mark->mark = $request->input('mark');
+
+        $mark->weight = $request->input('weight');
+
+        $mark->comment = $request->input('weight');
+
+        $mark->save();
+
+        return redirect('/teacher');
     }
 
     /**
@@ -85,6 +121,10 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        echo "ok";
+        $mark = Mark::findorFail($id);
+
+        $mark->delete();
+
+        return redirect('/teacher');
     }
 }
