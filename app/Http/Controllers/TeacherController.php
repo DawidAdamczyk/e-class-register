@@ -44,6 +44,7 @@ class TeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(MarkStore $request)
     {
         $mark = new Mark();
@@ -102,6 +103,7 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(MarkUpdate $request, $id)
     {
         $mark = Mark::find($id);
