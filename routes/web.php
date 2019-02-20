@@ -30,3 +30,5 @@ Route::get('/student', function(){
 Route::resource('teacher', 'TeacherController');
 
 Route::get('student' , 'StudentController@index');
+
+Route::post('student', 'StudentController@orderBy');
